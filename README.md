@@ -1,4 +1,5 @@
 ## GraphQl Subscriptions with Django
+
 A simpl implementation of Graphene + Django + Django Channels which showcases on how Graphql subscriptions can be used in a Django Project. This project demonstrates a simple service that generates a temperature every second to which we can subscribe and get real time updates and also demonstrates an example of subscriptions when a new object is created in your database using the Django post_save signals.
 
 ## Dependencies
@@ -15,8 +16,6 @@ A simpl implementation of Graphene + Django + Django Channels which showcases on
 ![image](https://user-images.githubusercontent.com/16799932/77150402-cda72a00-6ab9-11ea-8701-c5a2127ed3ef.png)
 
 ![image](https://user-images.githubusercontent.com/16799932/77150298-96d11400-6ab9-11ea-815f-15f44c50f664.gif)
-
-
 
 
 ## Setup
@@ -75,7 +74,7 @@ A simpl implementation of Graphene + Django + Django Channels which showcases on
     
     
 
-2. Add `GraphqlSubscriptionConsumer` to your `routing.py` file.
+4. Add `GraphqlSubscriptionConsumer` to your `routing.py` file.
 
     ```python
     # django_subscriptions/routing.py
@@ -93,7 +92,9 @@ A simpl implementation of Graphene + Django + Django Channels which showcases on
     * Note: The path `path('graphql-playground/', GraphqlSubscriptionConsumer)` has to be similar to the                          `GraphQLPlaygroundView` url in your project's urls.py file which is necessary to establish a websocket connection for           listening to live updates and model changes.
     
     
-3. Define your app level schema with Subscriptions and Queries and then later connect it to your project level schema. In the below example you have:
+## Deifine APP level schema 
+ 
+Define your app level schema with Subscriptions and Queries and then later connect it to your project level schema. In the below example you have:
   - `TemperatureSubscription` which simulates timestamp, random temperature value and unit to which we can subscribe to. 
   - `TemperatureCreatedSubscription` which returns your object data everytime a new object is created in your database. You       can use this to further create UPDATE, DELETE and even CUSTOM_EVENT subscriptions.
 
@@ -154,7 +155,11 @@ A simpl implementation of Graphene + Django + Django Channels which showcases on
             ).map(lambda event: event.instance)
    ``` 
 
-4. For the post_save subscription you need to define a model with a post_save signal which inherits the post_save_subscription method from graphene_subscriptions.signals module.
+
+
+## Define a Model with a post_save signal
+
+For the post_save subscription you need to define a model with a post_save signal which inherits the post_save_subscription method from graphene_subscriptions.signals module.
 
     ```python
     # temperature_app/models.py
@@ -172,7 +177,9 @@ A simpl implementation of Graphene + Django + Django Channels which showcases on
     post_save.connect(post_save_subscription, sender=Temperature, dispatch_uid="temperature_post_save")
     ```
 
-5. Connect your subscriptions from above to your project schema. Import you Subscriptions and Queries to inherit from the app level schema.
+## Define Project level schema.
+
+Connect your subscriptions from above to your project schema. Import you Subscriptions and Queries to inherit from the app level schema.
 
     ```python
     #django_subscriptions/schema.py
@@ -194,3 +201,38 @@ A simpl implementation of Graphene + Django + Django Channels which showcases on
         subscription=Subscription
     )
     ```
+    
+## Running the Project (MacOS)
+
+1. Using your local development server. 
+   Navigate to your empty project directory on your MacOS and then:
+
+  `git clone https://github.com/DevendraBAJAJ/django_graphql_subscriptions.git`
+
+  `cd django_graphql_subscriptions`
+
+  `source venv/bin/activate`
+
+  `python manage.py runserver`
+
+  Then navigate to:
+  `http://127.0.0.1:8000`
+
+
+2. Using docker container
+
+  `git clone https://github.com/DevendraBAJAJ/django_graphql_subscriptions.git`
+
+  `cd django_graphql_subscriptions`
+
+  `source venv/bin/activate`
+  
+  `docker-compose build`
+
+  `docker-compose up`
+
+  Then navigate to:
+  `http://127.0.0.1:8000`
+
+
+
