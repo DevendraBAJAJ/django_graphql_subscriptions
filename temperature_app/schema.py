@@ -8,26 +8,37 @@ from temperature_app.models import Temperature
 
 
 class TemperatureType(DjangoObjectType):
-    # timestamp = graphene.Int()
-    # value = graphene.Int()
-    # unit = graphene.String()
     class Meta:
         model = Temperature
 
 
 class TemperatureQuery(object):
-    current_temperature = graphene.Field(TemperatureType, timestamp=graphene.Int(), value=graphene.Int(), unit=graphene.String())
+    current_temperature = graphene.Field(
+        TemperatureType,
+        timestamp=graphene.Int(),
+        value=graphene.Int(),
+        unit=graphene.String()
+    )
 
     def resolve_current_temperature(self, info, **kwargs):
         return Temperature.objects.last()
 
 
 class TemperatureSubscription(graphene.ObjectType):
-    current_temperature_subscribe = graphene.Field(TemperatureType, timestamp=graphene.Int(), value=graphene.Int(), unit=graphene.String())
+    current_temperature_subscribe = graphene.Field(
+        TemperatureType,
+        timestamp=graphene.Int(),
+        value=graphene.Int(),
+        unit=graphene.String()
+    )
 
     def resolve_current_temperature_subscribe(self, info):
         return Observable.interval(1000)\
-            .map(lambda i: TemperatureType(timestamp=int(time.time()), value=random.randint(0, 36), unit="Fahrenheit"))
+            .map(lambda i: TemperatureType(
+                    timestamp=int(time.time()),
+                    value=random.randint(0, 36),
+                    unit="Fahrenheit")
+                 )
 
 
 class TemperatureCreatedSubscription(graphene.ObjectType):
