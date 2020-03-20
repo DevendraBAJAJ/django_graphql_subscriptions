@@ -216,7 +216,11 @@ Connect your subscriptions from above to your project schema. Import you Subscri
   `python manage.py runserver`
 
   Then navigate to:
-  `http://127.0.0.1:8000`
+  `http://127.0.0.1:8000/graphql-playground/` : This will open the playground interface.
+  
+  Within the playground interface navigate to:
+  `http://127.0.0.1:8000/temp-sub/`
+  
 
 
 2. Using docker container
@@ -232,7 +236,10 @@ Connect your subscriptions from above to your project schema. Import you Subscri
   `docker-compose up`
 
   Then navigate to:
-  `http://127.0.0.1:8000`
+  `http://127.0.0.1:8000/graphql-playground/` : This will open the playground interface.
+  
+  Within the playground interface navigate to:
+  `http://127.0.0.1:8000/temp-sub/`
 
 
 
