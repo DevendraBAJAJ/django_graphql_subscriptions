@@ -29,6 +29,6 @@ class GraphQLCustomCoreBackend(GraphQLCoreBackend):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('newgraphql/', csrf_exempt(GraphQLPlaygroundView.as_view())),
+    path('graphql-playground/', csrf_exempt(GraphQLPlaygroundView.as_view())),
     path('temp-sub/', csrf_exempt(GraphQLView.as_view(graphiql=True, backend=GraphQLCustomCoreBackend()))),
 ]

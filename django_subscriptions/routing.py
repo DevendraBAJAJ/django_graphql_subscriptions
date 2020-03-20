@@ -5,6 +5,6 @@ from graphene_subscriptions.consumers import GraphqlSubscriptionConsumer
 
 application = ProtocolTypeRouter({
     "websocket": URLRouter([
-        path('newgraphql/', GraphqlSubscriptionConsumer)
+        path('graphql-playground/', GraphqlSubscriptionConsumer)
     ]),
 })
