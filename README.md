@@ -162,19 +162,19 @@ Define your app level schema with Subscriptions and Queries and then later conne
 For the post_save subscription you need to define a model with a post_save signal which inherits the post_save_subscription method from graphene_subscriptions.signals module.
  
  ```python
-    # temperature_app/models.py
-    import time
-    from django.db import models
-    from django.db.models.signals import post_save
-    from graphene_subscriptions.signals import post_save_subscription
+ # temperature_app/models.py
+ import time
+ from django.db import models
+ from django.db.models.signals import post_save
+ from graphene_subscriptions.signals import post_save_subscription
 
-    class Temperature(models.Model):
-        timestamp = models.IntegerField(max_length=11, default=int(time.time()))
-        value = models.CharField(max_length=3)
-        unit = models.CharField(max_length=12, default='Fahrenheit')
+ class Temperature(models.Model):
+     timestamp = models.IntegerField(max_length=11, default=int(time.time()))
+     value = models.CharField(max_length=3)
+     unit = models.CharField(max_length=12, default='Fahrenheit')
 
 
-    post_save.connect(post_save_subscription, sender=Temperature, dispatch_uid="temperature_post_save")
+ post_save.connect(post_save_subscription, sender=Temperature, dispatch_uid="temperature_post_save")
 ``` 
 
 ## Define Project level schema.
@@ -182,24 +182,24 @@ For the post_save subscription you need to define a model with a post_save signa
 Connect your subscriptions from above to your project schema. Import you Subscriptions and Queries to inherit from the app level schema.
     
 ```python
-   # django_subscriptions/schema.py
-    import graphene
+# django_subscriptions/schema.py
+ import graphene
 
-    from temperature_app.schema import TemperatureQuery, TemperatureSubscription, TemperatureCreatedSubscription
-
-
-    class Query(TemperatureQuery, graphene.ObjectType):
-        pass
+ from temperature_app.schema import TemperatureQuery, TemperatureSubscription, TemperatureCreatedSubscription
 
 
-    class Subscription(TemperatureSubscription, TemperatureCreatedSubscription, graphene.ObjectType):
-        pass
+ class Query(TemperatureQuery, graphene.ObjectType):
+     pass
 
 
-    schema = graphene.Schema(
-        query=Query,
-        subscription=Subscription
-    )
+ class Subscription(TemperatureSubscription, TemperatureCreatedSubscription, graphene.ObjectType):
+     pass
+
+
+ schema = graphene.Schema(
+     query=Query,
+     subscription=Subscription
+ )
 ``` 
     
 ## Running the Project (MacOS)
