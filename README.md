@@ -99,8 +99,8 @@ Define your app level schema with Subscriptions and Queries and then later conne
   - `TemperatureCreatedSubscription` which returns your object data everytime a new object is created in your database. You       can use this to further create UPDATE, DELETE and even CUSTOM_EVENT subscriptions.
 
    ```python
-   # temperature_app/schema.py
-   from graphene_django import DjangoObjectType
+    # temperature_app/schema.py
+    from graphene_django import DjangoObjectType
     from graphene_subscriptions.events import CREATED
     from rx import Observable
     import graphene
@@ -160,8 +160,8 @@ Define your app level schema with Subscriptions and Queries and then later conne
 ## Define a Model with a post_save signal
 
 For the post_save subscription you need to define a model with a post_save signal which inherits the post_save_subscription method from graphene_subscriptions.signals module.
-
-    ```python
+ 
+ ```python
     # temperature_app/models.py
     import time
     from django.db import models
@@ -175,14 +175,14 @@ For the post_save subscription you need to define a model with a post_save signa
 
 
     post_save.connect(post_save_subscription, sender=Temperature, dispatch_uid="temperature_post_save")
-    ```
+``` 
 
 ## Define Project level schema.
 
 Connect your subscriptions from above to your project schema. Import you Subscriptions and Queries to inherit from the app level schema.
-
-    ```python
-    #django_subscriptions/schema.py
+    
+```python
+   # django_subscriptions/schema.py
     import graphene
 
     from temperature_app.schema import TemperatureQuery, TemperatureSubscription, TemperatureCreatedSubscription
@@ -200,7 +200,7 @@ Connect your subscriptions from above to your project schema. Import you Subscri
         query=Query,
         subscription=Subscription
     )
-    ```
+``` 
     
 ## Running the Project (MacOS)
 
