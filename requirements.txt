@@ -10,7 +10,7 @@ constantly==15.1.0
 coverage==5.0.4
 cryptography==2.8
 daphne==2.4.1
-Django==3.0.4
+Django==3.0.12
 django-graphql-playground==1.0
 gql-query-builder==0.1.5
 graphene==2.1.8
